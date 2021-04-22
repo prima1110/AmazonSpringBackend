@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @CrossOrigin
 @RestController
 public class Productcontroller {
@@ -23,6 +25,15 @@ public class Productcontroller {
     {
         var DataResponse = new DataResponse(proService.productCategory(product.getCategory()), "Product by"+product.getCategory());
         return new ResponseEntity(DataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity getAProduct(@PathVariable("id") String id)
+    {
+
+        var dataResponse = new DataResponse(Collections.singletonList(proService.getAProduct(id)),"Single Product");
+
+        return new ResponseEntity(dataResponse,HttpStatus.OK);
     }
 
     @PostMapping(value = "/products/add",consumes = {
